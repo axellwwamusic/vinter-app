@@ -36,9 +36,11 @@ input, button, select, textarea { font-family: var(--font); }
 button { cursor: pointer; border: none; background: none; }
 a { color: inherit; text-decoration: none; }
 
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
+/* Scrollbar - mais visível */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--surface2); border-radius: 99px; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #b0b0ad; }
 
 .splash { height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--surface); }
 .splash-logo { text-align: center; }
@@ -110,8 +112,9 @@ a { color: inherit; text-decoration: none; }
 .card-body { padding: 18px; }
 .card-body.p0 { padding: 0; }
 
+/* TABLE — ocupa 100% por padrão, scroll horizontal só quando necessário */
 .tbl-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--border); -webkit-overflow-scrolling: touch; }
-table { width: max-content; min-width: 100%; border-collapse: collapse; font-size: 13px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; table-layout: auto; }
 thead th { padding: 9px 12px; background: var(--surface2); color: var(--text2); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); text-align: left; white-space: nowrap; }
 tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
 tbody tr:last-child { border-bottom: none; }
@@ -158,11 +161,7 @@ tfoot tr:first-child td { border-top: 2px solid var(--border2); }
 
 /* MONTH TABS */
 .month-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 20px; }
-.month-tab {
-  padding: 8px 18px; border-radius: 99px; font-size: 14px; font-weight: 500;
-  color: var(--text2); background: var(--surface); border: 1px solid var(--border);
-  cursor: pointer; transition: all 0.13s; white-space: nowrap;
-}
+.month-tab { padding: 8px 18px; border-radius: 99px; font-size: 14px; font-weight: 500; color: var(--text2); background: var(--surface); border: 1px solid var(--border); cursor: pointer; transition: all 0.13s; white-space: nowrap; }
 .month-tab:hover { border-color: var(--border2); color: var(--text); }
 .month-tab.active { background: var(--text); color: #fff; border-color: var(--text); }
 .month-tab.has-data { border-color: var(--green); color: var(--green); }
