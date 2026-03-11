@@ -32,7 +32,6 @@ export default function Shows({ data, onChange }) {
     updateShows(remaining.length ? remaining : [newShow()])
   }
 
-  // Totals
   const totals = shows.reduce((acc, s) => {
     const c = calcShow(s)
     return {
@@ -54,7 +53,6 @@ export default function Shows({ data, onChange }) {
 
   return (
     <div>
-      {/* Month selector */}
       <div className="month-tabs">
         {MONTHS.map((m, i) => (
           <div
@@ -67,32 +65,6 @@ export default function Shows({ data, onChange }) {
         ))}
       </div>
 
-      {/* KPIs */}
-      <div className="kpi-row">
-        <div className="kpi-card">
-          <div className="kpi-label">Cachê Bruto</div>
-          <div className="kpi-val def">{brl(totals.bruto)}</div>
-          <div className="kpi-meta">{shows.filter(s=>s.evento||+s.cacheBruto>0).length} show(s)</div>
-        </div>
-        <div className="kpi-card">
-          <div className="kpi-label">Agência (15%)</div>
-          <div className="kpi-val neg">{brl(totals.agencia)}</div>
-        </div>
-        <div className="kpi-card">
-          <div className="kpi-label">Cachê Líquido</div>
-          <div className="kpi-val neu">{brl(totals.liquido)}</div>
-        </div>
-        <div className="kpi-card">
-          <div className="kpi-label">Management (10%)</div>
-          <div className="kpi-val neg">{brl(totals.management)}</div>
-        </div>
-        <div className="kpi-card">
-          <div className="kpi-label">Remanescente</div>
-          <div className={`kpi-val ${totals.remanescente >= 0 ? 'pos' : 'neg'}`}>{brl(totals.remanescente)}</div>
-        </div>
-      </div>
-
-      {/* Shows table */}
       <div className="card">
         <div className="card-head">
           <div className="card-title">Shows — {monthKey} 2026</div>
@@ -100,11 +72,11 @@ export default function Shows({ data, onChange }) {
         </div>
 
         <div className="card-body p0">
-          {/* Desktop table */}
           <div className="tbl-wrap" style={{borderRadius:'0 0 12px 12px', border:'none', borderTop:'1px solid var(--border)'}}>
             <table>
               <thead>
                 <tr>
+                  <th style={{width:36}}></th>
                   <th style={{width:50}}>Dia</th>
                   <th>Evento</th>
                   <th>Cidade</th>
@@ -120,7 +92,6 @@ export default function Shows({ data, onChange }) {
                   <th>Extra 02</th>
                   <th>Extra 03</th>
                   <th>Remanescente</th>
-                  <th style={{width:40}}></th>
                 </tr>
               </thead>
               <tbody>
@@ -128,6 +99,9 @@ export default function Shows({ data, onChange }) {
                   const c = calcShow(s)
                   return (
                     <tr key={s.id}>
+                      <td>
+                        <button className="btn btn-danger-soft btn-xs btn-icon" onClick={() => removeShow(s.id)} title="Remover">✕</button>
+                      </td>
                       <td><input className="tbl-input" style={{width:44}} placeholder="–" value={s.dia} onChange={e => updateShow(s.id,'dia',e.target.value)} /></td>
                       <td><input className="tbl-input" style={{minWidth:160}} placeholder="Nome do evento" value={s.evento} onChange={e => updateShow(s.id,'evento',e.target.value)} /></td>
                       <td><input className="tbl-input" style={{minWidth:110}} placeholder="Cidade" value={s.cidade} onChange={e => updateShow(s.id,'cidade',e.target.value)} /></td>
@@ -143,15 +117,13 @@ export default function Shows({ data, onChange }) {
                       <td><input className="tbl-input mono" style={{width:90}} placeholder="0,00" type="number" min="0" value={s.extra02} onChange={e => updateShow(s.id,'extra02',e.target.value)} /></td>
                       <td><input className="tbl-input mono" style={{width:90}} placeholder="0,00" type="number" min="0" value={s.extra03} onChange={e => updateShow(s.id,'extra03',e.target.value)} /></td>
                       <td className={c.remanescente >= 0 ? 'pos' : 'neg'} style={{whiteSpace:'nowrap'}}>{brl(c.remanescente)}</td>
-                      <td>
-                        <button className="btn btn-danger-soft btn-xs btn-icon" onClick={() => removeShow(s.id)} title="Remover">✕</button>
-                      </td>
                     </tr>
                   )
                 })}
               </tbody>
               <tfoot>
                 <tr>
+                  <td></td>
                   <td colSpan={5}>TOTAL</td>
                   <td>{brl(totals.bruto)}</td>
                   <td>{brl(totals.agencia)}</td>
@@ -161,7 +133,6 @@ export default function Shows({ data, onChange }) {
                   <td>{brl(totals.jonathan)}</td>
                   <td colSpan={3}>{brl(totals.despesasGig)}</td>
                   <td>{brl(totals.remanescente)}</td>
-                  <td></td>
                 </tr>
               </tfoot>
             </table>
